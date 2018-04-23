@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+					    http://www.springframework.org/schema/beans/spring-beans-4.3.xsd 
+				        http://www.springframework.org/schema/context
+				        http://www.springframework.org/schema/context/spring-context-4.3.xsd
+				        http://www.springframework.org/schema/tx
+				        http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+				        http://www.springframework.org/schema/aop 
+					    http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+					    http://www.springframework.org/schema/mvc 
+					    http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+				        http://mybatis.org/schema/mybatis-spring 
+					    http://mybatis.org/schema/mybatis-spring.xsd">
+	<!-- 注册处理器映射器BeanNameUrlHandlerMapping -->
+	<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"></bean>
+	<bean id="/myController" class="com.kedacom.controller.MyController"></bean>
+ 	
+    <!-- 
+		BeanNameUrlHandlerMapping的缺点：
+		1、id是一个路由，不是一个处理器的实例，显得不伦不类；、
+		2、如果多个路由对应一个处理器，多次注册处理器匹配多个路由，即需要创建多个路由实例
+		由此我们可以使用SimpleUrlHandlerMapping
+	 -->
+	 <!-- 注册第二种处理器映射器SimpleUrlHandlerMapping -->
+	<!-- <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/myController">myController</prop>
+				<prop key="/mySecondController">myController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="myController" class="com.kedacom.controller.MyController"></bean> -->
+	<!-- 第二种配置方式 -->
+ 	<!-- <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="urlMap">
+			<map>
+				此处如果key不以斜杠开头，框架自动加上斜杠
+				<entry key="myController" value="myController"></entry>
+				<entry key="test/myController" value="myController"></entry>
+			</map>
+		</property>
+	</bean>
+	<bean id="myController" class="com.kedacom.controller.MyController"></bean> -->
+
+	
+
+</beans>
