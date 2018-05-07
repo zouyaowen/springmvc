@@ -14,7 +14,7 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- servlet支持 -->
+		<!-- servlet支持，jar包范围为provided -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
