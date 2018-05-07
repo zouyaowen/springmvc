@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+					    http://www.springframework.org/schema/beans/spring-beans-4.3.xsd 
+				        http://www.springframework.org/schema/context
+				        http://www.springframework.org/schema/context/spring-context-4.3.xsd
+				        http://www.springframework.org/schema/tx
+				        http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+				        http://www.springframework.org/schema/aop 
+					    http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+					    http://www.springframework.org/schema/mvc 
+					    http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+				        http://mybatis.org/schema/mybatis-spring 
+					    http://mybatis.org/schema/mybatis-spring.xsd">
+	<!-- 实现Controller接口的类默认使用处理器适配器是 SimpleControllerHandlerAdapter
+		org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter
+	-->
+	<!-- 第四种方式实现处理器，继承MyMultiActionController，此类事AbstractControlle的子类
+		 依然可以配置HTTP请求方式
+	 -->
+	<!-- 配置处理器映射器 --> 
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			
+			<props>
+				<!-- 配置第一个处理器 -->
+				<prop key="/my/*">myMultiActionController</prop>
+				<!-- MultiActionController内部使用MethodNameResolver解析器接口实现路径与方法名的匹配 -->
+				<!-- MethodNameResolver默认实现的接口解析器是InternalPathMethodNameResolver，此解析器要求方法名以URI资源的方式实现，即***/方法名 -->
+				<!-- 确认路径与方法名匹配的是WebUtils类中的extractFilenameFromUrlPath方法实现 -->
+				
+				<!-- 配置第二个处理器 -->
+				<prop key="/zou*">myMultiActionController2</prop>
+				<!-- 配置第三个处理器 -->
+				<prop key="/myMultiActionController3">myMultiActionController3</prop>
+			</props>
+				
+		</property>
+	</bean>
+	<!-- 注册处理器，默认使用第一种内部路径方法名解析器InternalPathMethodNameResolver，方法名作为一种请求资源 -->
+	<bean id="myMultiActionController" class="com.kedacom.controller.MyMultiActionController"></bean>
+	
+	<!-- 、、、、、、、、、、、、、、、、、、、、、、使用第二种————方法名解析器、、、、、、、、、、、、、、、、、、、、、、、、、 -->
+	<!-- 注册处理器，使用PropertiesMethodNameResolver解析器，方法名作为请求资源的一部分 -->
+	<bean id="myMultiActionController2" class="com.kedacom.controller.MyMultiActionController2">
+		<property name="methodNameResolver" ref="propertisMethodNameResolver"></property>
+	</bean>
+	<!-- 配置方法名解析器 -->
+	<bean id="propertisMethodNameResolver" class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+		<property name="mappings">
+			<props>
+				<prop key="/zoudoFirst">doFirst</prop>
+				<prop key="/zoudoSecond">doSecond</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 、、、、、、、、、、、、、、、、、、、、、、使用第三种————方法名作为一个参数、、、、、、、、、、、、、、、、、、、、、、、、、 -->
+	<!-- 注册处理器，使用方法名作为一个参数传递 -->
+	<!-- 请求方式为在请求路径后面加"?method=方法名" -->
+	<bean id="myMultiActionController3" class="com.kedacom.controller.MyMultiActionController3">
+		<property name="methodNameResolver" ref="ParameterMethodNameResolver"></property>
+	</bean>
+	<!-- 配置方法名做为参数解析器 -->
+	<bean id="ParameterMethodNameResolver" class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+		<property name="paramName" value="method"/>
+	</bean>
+	
+</beans>

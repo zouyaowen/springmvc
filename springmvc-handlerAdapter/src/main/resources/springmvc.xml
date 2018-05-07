@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+					    http://www.springframework.org/schema/beans/spring-beans-4.3.xsd 
+				        http://www.springframework.org/schema/context
+				        http://www.springframework.org/schema/context/spring-context-4.3.xsd
+				        http://www.springframework.org/schema/tx
+				        http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+				        http://www.springframework.org/schema/aop 
+					    http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+					    http://www.springframework.org/schema/mvc 
+					    http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+				        http://mybatis.org/schema/mybatis-spring 
+					    http://mybatis.org/schema/mybatis-spring.xsd">
+	<!-- 实现Controller接口的类默认使用处理器适配器是 SimpleControllerHandlerAdapter
+		org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter
+	-->
+	<!-- 处理器第一种方式实现Controller接口，处理器适配器是SimpleControllerHandlerAdapter -->
+	<bean id="/myController" class="com.kedacom.controller.MyController"></bean>
+	<!-- 处理器第二种方式，实现HttpRequestHandler接口 -->
+	<bean id="/myHttpRequestHandler" class="com.kedacom.controller.MyHttpRequestHandler"></bean>
+	<!-- 处理器第三种方式 ，继承MyAbstractController抽象类，此种方式可以选择配置HTTP请求方式-->
+	<bean id="/myAbstractController" class="com.kedacom.controller.MyAbstractController">
+		<property name="supportedMethods" value="POST"></property>
+	</bean>
+	
+
+</beans>
