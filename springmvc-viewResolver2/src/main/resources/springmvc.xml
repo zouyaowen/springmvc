@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+					    http://www.springframework.org/schema/beans/spring-beans-4.3.xsd 
+				        http://www.springframework.org/schema/context
+				        http://www.springframework.org/schema/context/spring-context-4.3.xsd
+				        http://www.springframework.org/schema/tx
+				        http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+				        http://www.springframework.org/schema/aop 
+					    http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+					    http://www.springframework.org/schema/mvc 
+					    http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+				        http://mybatis.org/schema/mybatis-spring 
+					    http://mybatis.org/schema/mybatis-spring.xsd">
+	<!-- 注册控制器 -->
+	<bean id="/myController" class="com.kedacom.controller.MyController"></bean>
+	<bean id="/mukeController" class="com.kedacom.controller.MukeController"></bean>
+	<bean id="/internalController" class="com.kedacom.controller.InternalController"></bean>
+	<bean id="/pageSkipController" class="com.kedacom.controller.PageSkipController"></bean>
+	<!-- 注册视图解析器 -->
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver"></bean>
+	<!-- 定义内部资源View对象 -->
+	<bean id="myInternalView" class="org.springframework.web.servlet.view.JstlView">
+		<!-- JstlView定义内部视图对象 -->
+		<property name="url" value="/WEB-INF/jsp/internal.jsp"></property>
+	</bean>
+	<!-- 定义外部资源View对象 -->
+	<bean id="baidu" class="org.springframework.web.servlet.view.RedirectView">
+		<!-- RedirectView定义外部视图对象 -->
+		<property name="url" value="https://www.baidu.com"></property>
+	</bean>
+	<!-- 定义外部资源View对象 -->
+	<bean id="muke" class="org.springframework.web.servlet.view.RedirectView">
+		<!-- RedirectView定义外部视图对象 -->
+		<property name="url" value="https://www.imooc.com/"></property>
+	</bean>
+</beans>
